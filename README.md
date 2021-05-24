@@ -2,8 +2,7 @@
 
 [MethodHandles](https://docs.oracle.com/javase/7/docs/api/java/lang/invoke/MethodHandle.html) can be as fast as 
 direct invocation, as long as they are static final fields. Then they can be 
-inlined. But what if we want to use them dynamically? There's definitely simpler 
-solutions than this one, but I wanted to learn a thing or 2 about bytecode, so here I use [ASM](https://asm.ow2.io/) to create classes at runtime that contain the MethodHandle as a static final field. These "HandleWrappers" are almost as fast as direct invocation.
+inlined. But what if we want to use them dynamically? I wanted to learn a thing or 2 about bytecode, so here I use [ASM](https://asm.ow2.io/) to create classes at runtime that contain the MethodHandle as a static final field. These "HandleWrappers" are almost as fast as direct invocation.
 
 ```text
 Benchmark                                        Mode  Cnt  Score   Error  Units
