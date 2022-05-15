@@ -336,9 +336,7 @@ public class WrapperFactory {
 
         if (Util.isSignaturePolymorphic(to)) { // special case, signature will be customized
             mv.visitFieldInsn(GETSTATIC, description, "HANDLE", "Ljava/lang/invoke/MethodHandle;");
-            for (int i = 0; i < from.getParameterTypes().length; i++) {
-                Util.loadParam(mv, Type.getType(from.getParameterTypes()[i]), i + 1);
-            }
+            Util.loadParams(mv, false, from.getParameterTypes());
 
             mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/invoke/MethodHandle", to.getName(), Type.getType(from).getDescriptor(), false);
             Util.makeReturn(mv, Type.getType(from.getReturnType()));
@@ -352,10 +350,7 @@ public class WrapperFactory {
             mv.visitFieldInsn(GETSTATIC, description, "HANDLE", "Ljava/lang/invoke/MethodHandle;");
         }
 
-        for (int i = 0; i < from.getParameterTypes().length; i++) {
-            Util.loadParam(mv, Type.getType(from.getParameterTypes()[i]), isStatic ? i : i + 1);
-        }
-
+        Util.loadParams(mv, isStatic, from.getParameterTypes());
         mv.visitMethodInsn(isStatic ? INVOKESTATIC : INVOKEVIRTUAL, "java/lang/invoke/MethodHandle", to.getName(), Type.getType(to).getDescriptor(), false);
         Util.makeReturn(mv, Type.getType(to.getReturnType()));
         mv.visitMaxs(0, 0);

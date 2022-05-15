@@ -1,5 +1,6 @@
 package me.earth.handlewrapper;
 
+import me.earth.handlewrapper.util.InterfaceLongDoubleTest;
 import me.earth.handlewrapper.util.TestClass;
 import me.earth.handlewrapper.wrappers.HandleWrapper;
 import me.earth.handlewrapper.util.HandleMaker;
@@ -68,6 +69,18 @@ public class TestCases {
         Assertions.assertEquals(random, methodHandle.invokeExact(maker, maker));
         Assertions.assertEquals(random, methodHandle.invokeWithArguments(args));
         Assertions.assertEquals(random, methodHandle.invokeWithArguments(args.toArray()));
+    }
+
+    @Test
+    public void testCustomHandleLongDouble() throws Throwable {
+        Method method = InterfaceLongDoubleTest.LongDoubleTest.class.getDeclaredMethod("testLongDouble", long.class, String.class, double.class, int.class);
+        InterfaceLongDoubleTest test = WrapperFactory.wrap(InterfaceLongDoubleTest.class, InterfaceLongDoubleTest.getLinks(), MethodHandles.lookup().unreflect(method));
+        InterfaceLongDoubleTest.LongDoubleTest longDoubleTest = new InterfaceLongDoubleTest.LongDoubleTest();
+        double d = 5.0;
+        long l = 5L;
+        double result = test.invoke(longDoubleTest, l, "", d, -1);
+        double expected = d + l;
+        Assertions.assertEquals(expected, result);
     }
 
 }

@@ -121,6 +121,16 @@ final class Util {
         }
     }
 
+    public static void loadParams(MethodVisitor mv, boolean isStatic, Class<?>... types) {
+        for (int i = 0, var = isStatic ? 0 : 1; i < types.length; i++, var++) {
+            Type type = Type.getType(types[i]);
+            loadParam(mv, type, var);
+            if (type.getSort() == Type.DOUBLE || type.getSort() == Type.LONG) {
+                var++;
+            }
+        }
+    }
+
     public static void loadParam(MethodVisitor mv, Type type, int var) {
         switch (type.getSort()) {
             case Type.BOOLEAN:
