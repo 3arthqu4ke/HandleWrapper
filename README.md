@@ -6,9 +6,11 @@ inlined. But what if we want to use them dynamically? I wanted to learn a thing 
 
 ```text
 Benchmark                                        Mode  Cnt  Score   Error  Units
-QuickBenchmark.benchmarkDirect                   avgt   10  3,601 ± 0,015  ns/op
-QuickBenchmark.benchmarkStaticFinalMethodHandle  avgt   10  3,619 ± 0,027  ns/op
-QuickBenchmark.benchmarkWrapper                  avgt   10  3,839 ± 0,043  ns/op
+QuickBenchmark.benchmarkDirect                   avgt   10  3,592 ± 0,004  ns/op
+QuickBenchmark.benchmarkStaticFinalMethodHandle  avgt   10  3,638 ± 0,032  ns/op
+QuickBenchmark.benchmarkWrapper                  avgt   10  3,876 ± 0,049  ns/op
+QuickBenchmark.benchmarkNonStaticHandle          avgt   10  7,456 ± 0,460  ns/op
+QuickBenchmark.benchmarkNonFinalHandle           avgt   10  7,460 ± 0,189  ns/op
 ```
 
 ## Usage

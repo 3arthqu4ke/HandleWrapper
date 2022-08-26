@@ -30,6 +30,7 @@ public class BenchmarkQuickDirty {
     private static final BenchmarkQuickDirty INSTANCE = new BenchmarkQuickDirty();
     private static final MethodHandle STATIC;
     private static MethodHandle nonFinal;
+    private final MethodHandle nonStatic;
     private HandleWrapper wrapper;
     private CustomBenchmarkInterface custom;
     private Dry dry;
@@ -50,6 +51,7 @@ public class BenchmarkQuickDirty {
             Method method = BenchmarkQuickDirty.class.getDeclaredMethod("getX");
             method.setAccessible(true);
             MethodHandle handle = MethodHandles.lookup().unreflect(method);
+            nonStatic = handle;
             wrapper = WrapperFactory.wrap(handle, method);
             custom = WrapperFactory.wrap(CustomBenchmarkInterface.class, CustomBenchmarkInterface.getLinks(), handle);
             dry = new Dry();
@@ -80,6 +82,11 @@ public class BenchmarkQuickDirty {
     @Benchmark
     public int benchmarkNonFinalHandle() throws Throwable {
         return (int) nonFinal.invoke(INSTANCE);
+    }
+
+    @Benchmark
+    public int benchmarkNonStaticHandle() throws Throwable {
+        return (int) nonStatic.invoke(INSTANCE);
     }
 
     /*
